@@ -9,20 +9,20 @@ import { Input, TextArea, FormBtn } from "../../components/Form";
 class Books extends Component {
   // Setting our component's initial state
   state = {
-    
+    books: [],
     title: "",
-    date: "",
-    url: ""
+    author: "",
+    synopsis: ""
   };
 
   // When the component mounts, load all books and save them to this.state.books
   componentDidMount() {
-    this.loadArticles();
+    this.loadBooks();
   }
 
   // Loads all books  and sets them to this.state.books
-  loadArticles = () => {
-    API.getArticles()
+  loadBooks = () => {
+    API.getBooks()
       .then(res =>
         this.setState({ books: res.data, title: "", author: "", synopsis: "" })
       )
@@ -98,17 +98,17 @@ class Books extends Component {
             <Jumbotron>
               <h1>Books On My List</h1>
             </Jumbotron>
-            {this.state.articles.length ? (
+            {this.state.books.length ? (
               <List>
-                {this.state.books.map(article => {
+                {this.state.books.map(book => {
                   return (
-                    <ListItem key={article._id}>
-                      <a href={"/books/" + article._id}>
+                    <ListItem key={book._id}>
+                      <a href={"/books/" + book._id}>
                         <strong>
-                          {article.title} by {article.author}
+                          {book.title} by {book.author}
                         </strong>
                       </a>
-                      <DeleteBtn onClick={() => this.deleteBook(article._id)} />
+                      <DeleteBtn onClick={() => this.deleteBook(book._id)} />
                     </ListItem>
                   );
                 })}
